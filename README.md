@@ -76,14 +76,9 @@ Copy code
 - IndexedDB
 IndexedDB is used for local storage to ensure that users can still view and send messages even when they are offline. The app syncs messages to InstantDB when an internet connection is available.
 - InstantDB
-InstantDB is used for real-time message synchronization. Whenever a message is sent, it is stored in InstantDB and can be retrieved immediately by other users in real time.
-- Challenges Faced
-Real-time Data Sync: Ensuring that messages were instantly reflected across all clients in real-time was a challenge. This was achieved by using InstantDB's real-time capabilities.
-Offline Support: Implementing IndexedDB for offline data storage was challenging, as I had to ensure that data was saved locally and synced correctly once the app came back online.
-State Management: Managing the state of contacts and messages globally was challenging initially. I used useReducer combined with Context API to create a scalable and efficient solution.
-Future Improvements
-Message Notifications: Implementing push notifications when new messages arrive.
-User Authentication: Adding user authentication (e.g., email/password or OAuth) to manage users.
-Group Chats: Adding support for group chats, where multiple contacts can interact in a single chat window.
-Demo
+- InstantDB is used for real-time message synchronization. Whenever a message is sent, it is stored in InstantDB and can be retrieved immediately by other users in real time.
+- Message Notifications: Push notifications are implemented when new messages arrive.
+- User Authentication: Adding user authentication (e.g., email/password or OAuth) to manage users.
+- Group Chats: Adding support for group chats, where multiple contacts can interact in a single chat window.
+## Demo
 You can check out the live demo of the application here - https://dreamy-salmiakki-00e9e6.netlify.app/ 
