@@ -1,31 +1,32 @@
-import React, { useContext, useState } from 'react';
-import ContactContext from '../context/ContactContext';
-import useInstantDB from '../hooks/useInstantDB';
-import './MessageInput.css';
+import React from "react";
 
-const MessageInput = ({ contact }) => {
-    const [message, setMessage] = useState('');
-    const { dispatch } = useContext(ContactContext);
-    const { sendMessage } = useInstantDB();
+function MessageInput({ value, onChange, onSend }) {
+  // Function to handle Enter key press
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && value.trim() !== "") {
+      e.preventDefault(); // Prevent default Enter key behavior (e.g., new line in text area)
+      onSend(); // Trigger the send message function
+    }
+  };
 
-    const handleSend = async () => {
-        const newMessage = { text: message, timestamp: Date.now() };
-        await sendMessage(contact.id, newMessage);
-        dispatch({ type: 'ADD_MESSAGE', payload: { contact: contact.id, message: newMessage } });
-        setMessage('');
-    };
-
-    return (
-        <div className="message-input">
-            <input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Type a message"
-            />
-            <button onClick={handleSend}>Send</button>
-        </div>
-    );
-};
+  return (
+    <div className="flex items-center p-2 border-t border-gray-300">
+      <input
+        type="text"
+        className="flex-1 p-2 rounded-lg border border-gray-300"
+        placeholder="Type a message..."
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyPress={handleKeyPress} // Add the keypress event
+      />
+      <button
+        onClick={onSend}
+        className="ml-2 p-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+      >
+        Send
+      </button>
+    </div>
+  );
+}
 
 export default MessageInput;

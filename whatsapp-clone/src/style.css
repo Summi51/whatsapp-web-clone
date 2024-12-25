@@ -1,0 +1,153 @@
+General Styles
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  #root {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Layout */
+  .container {
+    display: flex;
+    width: 90%;
+    height: 90%;
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Contact List */
+  .contact-list {
+    width: 30%;
+    background-color: #f7f9fc;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+  }
+  
+  .contact-list h2 {
+    margin: 0;
+    padding: 1rem;
+    background-color: #007bff;
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .contact-list ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .contact-list li {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .contact-list li:hover {
+    background-color: #e6f0ff;
+  }
+  
+  .contact-list li.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  /* Chat Window */
+  .chat-window {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-window-header {
+    padding: 1rem;
+    background-color: #007bff;
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .chat-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+  }
+  
+  .chat-messages .message {
+    margin: 0.5rem 0;
+    padding: 0.8rem;
+    border-radius: 8px;
+    max-width: 70%;
+  }
+  
+  .chat-messages .message.sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+  }
+  
+  .chat-messages .message.received {
+    background-color: #ffffff;
+    align-self: flex-start;
+  }
+  
+  /* Message Field */
+  .message-field {
+    display: flex;
+    padding: 1rem;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+  }
+  
+  .message-field input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+  }
+  
+  .message-field button {
+    padding: 0.8rem 1.2rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .message-field button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .contact-list {
+      width: 100%;
+      height: 40%;
+      border-right: none;
+      border-bottom: 1px solid #ddd;
+    }
+  
+    .chat-window {
+      width: 100%;
+      height: 60%;
+    }
+  }
+  

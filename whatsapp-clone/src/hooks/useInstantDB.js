@@ -1,37 +1,56 @@
-import { useCallback } from "react";
-import { init } from "@instantdb/react";
+import { useState, useEffect } from "react";
+import { getMessages, saveMessage } from "../utils/instantdb"; // Import the functions
 
-const useInstantDB = () => {
-  const apiKey = "3be11bc6-c5bc-4cd7-b991-04993a051b89";
+export function useMessages(contactId) {
+  const [messages, setMessages] = useState([]);
 
-  const getContacts = useCallback(async () => {
-    // Replace with InstantDB API call
-    const db = init({
-      appId: process.env.API_KEY,
-    });
-    const query = { goals: {} };
-    const { isLoading, error, data } = db.useQuery(query);
+  // Fetch messages from IndexedDB
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const fetchedMessages = await getMessages(contactId);
+      setMessages(fetchedMessages);
+    };
 
-    const response = await fetch("https://api.instantdb.com/contacts", {
-      headers: { Authorization: `Bearer ${apiKey}` },
-    });
-    return response.ok ? await response.json() : [];
-  }, []);
+    if (contactId) {
+      fetchMessages();
+    }
+  }, [contactId]);
 
-  const sendMessage = useCallback(async (contactId, message) => {
-    // Replace with InstantDB API call
+  // Send a message and save it to IndexedDB
+  const sendMessage = async (newMessage) => {
+    // Check if newMessage is defined and has a valid 'text' property
+    if (
+      !newMessage ||
+      typeof newMessage.text !== "string" ||
+      newMessage.text.trim() === ""
+    ) {
+      console.error("Message text is required and must be a non-empty string");
+      return; // Avoid sending an empty or invalid message
+    }
 
-    await fetch(`https://api.instantdb.com/messages/${contactId}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(message),
-    });
-  }, []);
+    // Ensure the message has all necessary properties (timestamp, sender)
+    const messageToSend = {
+      ...newMessage,
+      timestamp: newMessage.timestamp || Date.now(), // If no timestamp, use the current time
+      sender: newMessage.sender || "You", // Default sender if not provided
+    };
 
-  return { getContacts, sendMessage };
-};
+    try {
+      // Save the message to IndexedDB
+      await saveMessage(contactId, messageToSend);
 
-export default useInstantDB;
+      // Update the messages state with the new message
+      setMessages((prevMessages) => [...prevMessages, messageToSend]);
+    } catch (error) {
+      console.error("Error saving the message:", error);
+    }
+  };
+
+  // Get the last message or return a default message if there are no messages
+  const lastMessage =
+    messages.length > 0
+      ? messages[messages.length - 1]
+      : { text: "No messages" };
+
+  return { messages, sendMessage, lastMessage };
+}
