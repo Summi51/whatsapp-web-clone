@@ -2,6 +2,8 @@
 
 This project is a real-time messaging application similar to WhatsApp Web, built with React.js, InstantDB, and IndexedDB. It features a contact list on the left and a chat window on the right. The app supports sending and receiving messages, and uses InstantDB for real-time message storage and retrieval, as well as IndexedDB to provide offline capabilities.
 
+## Netlify Link - https://dreamy-salmiakki-00e9e6.netlify.app/
+
 ## Features
 - Contact List: Display a list of contacts on the left side of the screen.
 - Chat Window: Display the chat history of the selected contact on the right.
